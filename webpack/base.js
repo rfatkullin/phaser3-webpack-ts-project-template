@@ -5,6 +5,12 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "development",
+  entry: {
+    app: [
+      path.resolve(__dirname, '../src/index.ts')
+    ],
+    vendor: ['phaser']
+  },
   devtool: "eval-source-map",
   module: {
     rules: [
@@ -14,6 +20,18 @@ module.exports = {
         use: {
           loader: "babel-loader"
         }
+      },
+      {
+        test: /\.ts?$/,
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+              experimentalWatchApi: true
+            }
+          },
+        ],
       },
       {
         test: [/\.vert$/, /\.frag$/],
